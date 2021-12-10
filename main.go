@@ -15,6 +15,7 @@ import (
 	"github.com/danielmmetz/adventofcode2021/day07"
 	"github.com/danielmmetz/adventofcode2021/day08"
 	"github.com/danielmmetz/adventofcode2021/day09"
+	"github.com/danielmmetz/adventofcode2021/day10"
 )
 
 func main() {
@@ -57,6 +58,8 @@ func mainE(day, part int) error {
 		s = day08.Solution{}
 	case 9:
 		s = day09.Solution{}
+	case 10:
+		s = day10.Solution{}
 	default:
 		return fmt.Errorf("not yet implemented: day %d", day)
 	}
