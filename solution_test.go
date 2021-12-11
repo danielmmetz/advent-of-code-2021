@@ -16,6 +16,7 @@ import (
 	"github.com/danielmmetz/adventofcode2021/day08"
 	"github.com/danielmmetz/adventofcode2021/day09"
 	"github.com/danielmmetz/adventofcode2021/day10"
+	"github.com/danielmmetz/adventofcode2021/day11"
 )
 
 var (
@@ -39,6 +40,8 @@ var (
 	input09 string
 	//go:embed day10/input.txt
 	input10 string
+	//go:embed day11/input.txt
+	input11 string
 )
 
 func TestSolutions(t *testing.T) {
@@ -57,6 +60,7 @@ func TestSolutions(t *testing.T) {
 		{day08.Solution{}, input08, 26, 61229},
 		{day09.Solution{}, input09, 15, 1134},
 		{day10.Solution{}, input10, 26397, 288957},
+		{day11.Solution{}, input11, 1656, 195},
 	}
 	for i, c := range cases {
 		day := i + 1
