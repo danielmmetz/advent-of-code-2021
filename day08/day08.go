@@ -4,18 +4,14 @@ import (
 	"fmt"
 	"sort"
 	"strings"
-
-	"github.com/danielmmetz/adventofcode2021/solution"
 )
 
-type Solution struct {
-	solution.Solution
-}
+type Solution struct{}
 
-func (s Solution) Part1(lines []string) (string, error) {
+func (s Solution) Part1(lines []string) (int, error) {
 	entries, err := parse(lines)
 	if err != nil {
-		return "", fmt.Errorf("parse error: %w", err)
+		return 0, fmt.Errorf("parse error: %w", err)
 	}
 	uniqueLengths := map[int]bool{
 		2: true,
@@ -31,19 +27,19 @@ func (s Solution) Part1(lines []string) (string, error) {
 			}
 		}
 	}
-	return fmt.Sprint(count), nil
+	return count, nil
 }
 
-func (s Solution) Part2(lines []string) (string, error) {
+func (s Solution) Part2(lines []string) (int, error) {
 	entries, err := parse(lines)
 	if err != nil {
-		return "", fmt.Errorf("parse error: %w", err)
+		return 0, fmt.Errorf("parse error: %w", err)
 	}
 	var normalizedEntries []entry
 	for i, entry := range entries {
 		normalized, err := normalize(entry)
 		if err != nil {
-			return "", fmt.Errorf("error normalizing entry %d: %w", i, err)
+			return 0, fmt.Errorf("error normalizing entry %d: %w", i, err)
 		}
 		normalizedEntries = append(normalizedEntries, normalized)
 	}
@@ -57,7 +53,7 @@ func (s Solution) Part2(lines []string) (string, error) {
 		total += number
 	}
 
-	return fmt.Sprint(total), nil
+	return total, nil
 }
 
 func parse(lines []string) ([]entry, error) {

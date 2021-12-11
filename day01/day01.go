@@ -3,20 +3,16 @@ package day01
 import (
 	"fmt"
 	"strconv"
-
-	"github.com/danielmmetz/adventofcode2021/solution"
 )
 
-type Solution struct {
-	solution.Solution
-}
+type Solution struct{}
 
-func (s Solution) Part1(lines []string) (string, error) {
+func (s Solution) Part1(lines []string) (int, error) {
 	depths := make([]int, 0, len(lines))
 	for _, line := range lines {
 		depth, err := strconv.Atoi(line)
 		if err != nil {
-			return "", fmt.Errorf("cannot convert %s to int: %w", line, err)
+			return 0, fmt.Errorf("cannot convert %s to int: %w", line, err)
 		}
 		depths = append(depths, depth)
 	}
@@ -29,15 +25,15 @@ func (s Solution) Part1(lines []string) (string, error) {
 			count++
 		}
 	}
-	return strconv.Itoa(count), nil
+	return count, nil
 }
 
-func (s Solution) Part2(lines []string) (string, error) {
+func (s Solution) Part2(lines []string) (int, error) {
 	depths := make([]int, 0, len(lines))
 	for _, line := range lines {
 		depth, err := strconv.Atoi(line)
 		if err != nil {
-			return "", fmt.Errorf("cannot convert %s to int: %w", line, err)
+			return 0, fmt.Errorf("cannot convert %s to int: %w", line, err)
 		}
 		depths = append(depths, depth)
 	}
@@ -54,5 +50,5 @@ func (s Solution) Part2(lines []string) (string, error) {
 		}
 		prev = current
 	}
-	return strconv.Itoa(count), nil
+	return count, nil
 }

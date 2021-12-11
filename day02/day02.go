@@ -4,18 +4,14 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-
-	"github.com/danielmmetz/adventofcode2021/solution"
 )
 
-type Solution struct {
-	solution.Solution
-}
+type Solution struct{}
 
-func (s Solution) Part1(lines []string) (string, error) {
+func (s Solution) Part1(lines []string) (int, error) {
 	commands, err := parse(lines)
 	if err != nil {
-		return "", fmt.Errorf("parse error: %w", err)
+		return 0, fmt.Errorf("parse error: %w", err)
 	}
 	var x, y int
 	for i, c := range commands {
@@ -27,16 +23,16 @@ func (s Solution) Part1(lines []string) (string, error) {
 		case "forward":
 			x += c.magnitude
 		default:
-			return "", fmt.Errorf("unexpected direction for command %d: %s", i, c.direction)
+			return 0, fmt.Errorf("unexpected direction for command %d: %s", i, c.direction)
 		}
 	}
-	return fmt.Sprint(x * y), nil
+	return x * y, nil
 }
 
-func (s Solution) Part2(lines []string) (string, error) {
+func (s Solution) Part2(lines []string) (int, error) {
 	commands, err := parse(lines)
 	if err != nil {
-		return "", fmt.Errorf("parse error: %w", err)
+		return 0, fmt.Errorf("parse error: %w", err)
 	}
 	var x, y, aim int
 	for i, c := range commands {
@@ -49,10 +45,10 @@ func (s Solution) Part2(lines []string) (string, error) {
 			x += c.magnitude
 			y += c.magnitude * aim
 		default:
-			return "", fmt.Errorf("unexpected direction for command %d: %s", i, c.direction)
+			return 0, fmt.Errorf("unexpected direction for command %d: %s", i, c.direction)
 		}
 	}
-	return fmt.Sprint(x * y), nil
+	return x * y, nil
 }
 
 type command struct {

@@ -6,18 +6,14 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-
-	"github.com/danielmmetz/adventofcode2021/solution"
 )
 
-type Solution struct {
-	solution.Solution
-}
+type Solution struct{}
 
-func (s Solution) Part1(lines []string) (string, error) {
+func (s Solution) Part1(lines []string) (int, error) {
 	positions, err := parse(lines)
 	if err != nil {
-		return "", fmt.Errorf("parse error: %w", err)
+		return 0, fmt.Errorf("parse error: %w", err)
 	}
 	sort.Ints(positions)
 	meetingPoint := median(positions)
@@ -29,13 +25,13 @@ func (s Solution) Part1(lines []string) (string, error) {
 		}
 		cost += delta
 	}
-	return fmt.Sprint(cost), nil
+	return cost, nil
 }
 
-func (s Solution) Part2(lines []string) (string, error) {
+func (s Solution) Part2(lines []string) (int, error) {
 	positions, err := parse(lines)
 	if err != nil {
-		return "", fmt.Errorf("parse error: %w", err)
+		return 0, fmt.Errorf("parse error: %w", err)
 	}
 	trueMean := mean(positions)
 	var costToFloor int
@@ -58,7 +54,7 @@ func (s Solution) Part2(lines []string) (string, error) {
 	if costToCiel < minCost {
 		minCost = costToCiel
 	}
-	return fmt.Sprint(minCost), nil
+	return minCost, nil
 }
 
 func parse(lines []string) ([]int, error) {

@@ -4,38 +4,34 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-
-	"github.com/danielmmetz/adventofcode2021/solution"
 )
 
-type Solution struct {
-	solution.Solution
-}
+type Solution struct{}
 
-func (s Solution) Part1(lines []string) (string, error) {
+func (s Solution) Part1(lines []string) (int, error) {
 	ages, err := parse(lines)
 	if err != nil {
-		return "", fmt.Errorf("parse error: %w", err)
+		return 0, fmt.Errorf("parse error: %w", err)
 	}
 	population := make(map[int]int)
 	for _, age := range ages {
 		population[age]++
 	}
 	total := grow(population, 80)
-	return fmt.Sprint(total), nil
+	return total, nil
 }
 
-func (s Solution) Part2(lines []string) (string, error) {
+func (s Solution) Part2(lines []string) (int, error) {
 	ages, err := parse(lines)
 	if err != nil {
-		return "", fmt.Errorf("parse error: %w", err)
+		return 0, fmt.Errorf("parse error: %w", err)
 	}
 	population := make(map[int]int)
 	for _, age := range ages {
 		population[age]++
 	}
 	total := grow(population, 256)
-	return fmt.Sprint(total), nil
+	return total, nil
 }
 
 func parse(lines []string) ([]int, error) {

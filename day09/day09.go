@@ -4,18 +4,14 @@ import (
 	"fmt"
 	"sort"
 	"strconv"
-
-	"github.com/danielmmetz/adventofcode2021/solution"
 )
 
-type Solution struct {
-	solution.Solution
-}
+type Solution struct{}
 
-func (s Solution) Part1(lines []string) (string, error) {
+func (s Solution) Part1(lines []string) (int, error) {
 	grid, err := parse(lines)
 	if err != nil {
-		return "", fmt.Errorf("parse error: %w", err)
+		return 0, fmt.Errorf("parse error: %w", err)
 	}
 	var lowPoints []int
 	for i := range grid {
@@ -36,13 +32,13 @@ func (s Solution) Part1(lines []string) (string, error) {
 	for _, p := range lowPoints {
 		total += p + 1
 	}
-	return fmt.Sprint(total), nil
+	return total, nil
 }
 
-func (s Solution) Part2(lines []string) (string, error) {
+func (s Solution) Part2(lines []string) (int, error) {
 	grid, err := parse(lines)
 	if err != nil {
-		return "", fmt.Errorf("parse error: %w", err)
+		return 0, fmt.Errorf("parse error: %w", err)
 	}
 	var lowPoints []point
 	for i := range grid {
@@ -79,7 +75,7 @@ func (s Solution) Part2(lines []string) (string, error) {
 		}
 	}
 	if len(basins) < 3 {
-		return "", fmt.Errorf("expected at least 3 basins, found %d", len(basins))
+		return 0, fmt.Errorf("expected at least 3 basins, found %d", len(basins))
 	}
 
 	var basinSizes []int
@@ -89,7 +85,7 @@ func (s Solution) Part2(lines []string) (string, error) {
 	sort.Ints(basinSizes)
 	n := len(basinSizes)
 	total := basinSizes[n-1] * basinSizes[n-2] * basinSizes[n-3]
-	return fmt.Sprint(total), nil
+	return total, nil
 }
 
 func parse(lines []string) ([][]int, error) {

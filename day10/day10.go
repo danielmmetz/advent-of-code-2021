@@ -1,17 +1,12 @@
 package day10
 
 import (
-	"fmt"
 	"sort"
-
-	"github.com/danielmmetz/adventofcode2021/solution"
 )
 
-type Solution struct {
-	solution.Solution
-}
+type Solution struct{}
 
-func (s Solution) Part1(lines []string) (string, error) {
+func (s Solution) Part1(lines []string) (int, error) {
 	var total int
 	for _, line := range lines {
 		var corrupted bool
@@ -32,10 +27,10 @@ func (s Solution) Part1(lines []string) (string, error) {
 			}
 		}
 	}
-	return fmt.Sprint(total), nil
+	return total, nil
 }
 
-func (s Solution) Part2(lines []string) (string, error) {
+func (s Solution) Part2(lines []string) (int, error) {
 	var scores []int
 	for _, line := range lines {
 		var corrupted bool
@@ -66,7 +61,7 @@ func (s Solution) Part2(lines []string) (string, error) {
 	}
 	sort.Ints(scores)
 	middleIndex := len(scores) / 2
-	return fmt.Sprint(scores[middleIndex]), nil
+	return scores[middleIndex], nil
 }
 
 func closes(left, right rune) bool {

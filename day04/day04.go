@@ -4,35 +4,31 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-
-	"github.com/danielmmetz/adventofcode2021/solution"
 )
 
-type Solution struct {
-	solution.Solution
-}
+type Solution struct{}
 
-func (s Solution) Part1(lines []string) (string, error) {
+func (s Solution) Part1(lines []string) (int, error) {
 	drawings, boards, err := parse(lines)
 	if err != nil {
-		return "", fmt.Errorf("parse error: %w", err)
+		return 0, fmt.Errorf("parse error: %w", err)
 	}
 	seen := make(map[int]bool)
 	for _, n := range drawings {
 		seen[n] = true
 		for _, b := range boards {
 			if wins(b, seen) {
-				return fmt.Sprint(score(b, seen) * n), nil
+				return score(b, seen) * n, nil
 			}
 		}
 	}
-	return "", nil
+	return 0, nil
 }
 
-func (s Solution) Part2(lines []string) (string, error) {
+func (s Solution) Part2(lines []string) (int, error) {
 	drawings, boards, err := parse(lines)
 	if err != nil {
-		return "", fmt.Errorf("parse error: %w", err)
+		return 0, fmt.Errorf("parse error: %w", err)
 	}
 	seen := make(map[int]bool)
 	var losingBoard board
@@ -53,10 +49,10 @@ func (s Solution) Part2(lines []string) (string, error) {
 	for _, n := range drawings {
 		seen[n] = true
 		if wins(losingBoard, seen) {
-			return fmt.Sprint(score(losingBoard, seen) * n), nil
+			return score(losingBoard, seen) * n, nil
 		}
 	}
-	return "", fmt.Errorf("exhausted input without finding sole losing board")
+	return 0, fmt.Errorf("exhausted input without finding sole losing board")
 }
 
 func parse(lines []string) ([]int, []board, error) {

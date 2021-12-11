@@ -4,24 +4,20 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-
-	"github.com/danielmmetz/adventofcode2021/solution"
 )
 
-type Solution struct {
-	solution.Solution
-}
+type Solution struct{}
 
-func (s Solution) Part1(lines []string) (string, error) {
+func (s Solution) Part1(lines []string) (int, error) {
 	ventLines, err := parse(lines)
 	if err != nil {
-		return "", fmt.Errorf("parse error: %w", err)
+		return 0, fmt.Errorf("parse error: %w", err)
 	}
 	hits := make(map[point]int)
 	for i, line := range ventLines {
 		ps, err := pointsBetween(line.start, line.end, false)
 		if err != nil {
-			return "", fmt.Errorf("error calculating points on vent line %d: %w", i, err)
+			return 0, fmt.Errorf("error calculating points on vent line %d: %w", i, err)
 		}
 		for _, p := range ps {
 			hits[p]++
@@ -33,19 +29,19 @@ func (s Solution) Part1(lines []string) (string, error) {
 			dangerSpots++
 		}
 	}
-	return fmt.Sprint(dangerSpots), nil
+	return dangerSpots, nil
 }
 
-func (s Solution) Part2(lines []string) (string, error) {
+func (s Solution) Part2(lines []string) (int, error) {
 	ventLines, err := parse(lines)
 	if err != nil {
-		return "", fmt.Errorf("parse error: %w", err)
+		return 0, fmt.Errorf("parse error: %w", err)
 	}
 	hits := make(map[point]int)
 	for i, line := range ventLines {
 		ps, err := pointsBetween(line.start, line.end, true)
 		if err != nil {
-			return "", fmt.Errorf("error calculating points on vent line %d: %w", i, err)
+			return 0, fmt.Errorf("error calculating points on vent line %d: %w", i, err)
 		}
 		for _, p := range ps {
 			hits[p]++
@@ -57,7 +53,7 @@ func (s Solution) Part2(lines []string) (string, error) {
 			dangerSpots++
 		}
 	}
-	return fmt.Sprint(dangerSpots), nil
+	return dangerSpots, nil
 }
 
 func parse(lines []string) ([]ventLine, error) {

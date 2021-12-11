@@ -3,15 +3,11 @@ package day03
 import (
 	"fmt"
 	"strconv"
-
-	"github.com/danielmmetz/adventofcode2021/solution"
 )
 
-type Solution struct {
-	solution.Solution
-}
+type Solution struct{}
 
-func (s Solution) Part1(lines []string) (string, error) {
+func (s Solution) Part1(lines []string) (int, error) {
 	var numBits int
 	for i, line := range lines {
 		if i == 0 {
@@ -19,7 +15,7 @@ func (s Solution) Part1(lines []string) (string, error) {
 			continue
 		}
 		if len(line) != numBits {
-			return "", fmt.Errorf("expected lines of equal bit lengths: not true for line %d", i)
+			return 0, fmt.Errorf("expected lines of equal bit lengths: not true for line %d", i)
 		}
 	}
 	var gamma, epsilon int
@@ -35,7 +31,7 @@ func (s Solution) Part1(lines []string) (string, error) {
 			case '1':
 				ones++
 			default:
-				return "", fmt.Errorf("invalid bit in line %d: %s", i, line)
+				return 0, fmt.Errorf("invalid bit in line %d: %s", i, line)
 			}
 		}
 		switch {
@@ -44,14 +40,14 @@ func (s Solution) Part1(lines []string) (string, error) {
 		case ones > zeros:
 			gamma += 1
 		default:
-			return "", fmt.Errorf("equal number of zeros and ones for bit position %d", pos)
+			return 0, fmt.Errorf("equal number of zeros and ones for bit position %d", pos)
 		}
 	}
 
-	return fmt.Sprint(gamma * epsilon), nil
+	return gamma * epsilon, nil
 }
 
-func (s Solution) Part2(lines []string) (string, error) {
+func (s Solution) Part2(lines []string) (int, error) {
 	var numBits int
 	for i, line := range lines {
 		if i == 0 {
@@ -59,7 +55,7 @@ func (s Solution) Part2(lines []string) (string, error) {
 			continue
 		}
 		if len(line) != numBits {
-			return "", fmt.Errorf("expected lines of equal bit lengths: not true for line %d", i)
+			return 0, fmt.Errorf("expected lines of equal bit lengths: not true for line %d", i)
 		}
 	}
 	oxygenLines := lines
@@ -75,7 +71,7 @@ func (s Solution) Part2(lines []string) (string, error) {
 				ones++
 				oneLines = append(oneLines, line)
 			default:
-				return "", fmt.Errorf("invalid bit in line %d: %s", i, line)
+				return 0, fmt.Errorf("invalid bit in line %d: %s", i, line)
 			}
 		}
 		if zeros > ones {
@@ -98,7 +94,7 @@ func (s Solution) Part2(lines []string) (string, error) {
 				ones++
 				oneLines = append(oneLines, line)
 			default:
-				return "", fmt.Errorf("invalid bit in line %d: %s", i, line)
+				return 0, fmt.Errorf("invalid bit in line %d: %s", i, line)
 			}
 		}
 		if zeros <= ones {
@@ -109,19 +105,19 @@ func (s Solution) Part2(lines []string) (string, error) {
 	}
 
 	if len(oxygenLines) != 1 {
-		return "", fmt.Errorf("expected to have whittled down to a single oxygen line: %v", oxygenLines)
+		return 0, fmt.Errorf("expected to have whittled down to a single oxygen line: %v", oxygenLines)
 	}
 	if len(c02Lines) != 1 {
-		return "", fmt.Errorf("expected to have whittled down to a single oxygen line: %v", c02Lines)
+		return 0, fmt.Errorf("expected to have whittled down to a single oxygen line: %v", c02Lines)
 	}
 	oxygen, err := strconv.ParseInt(oxygenLines[0], 2, 64)
 	if err != nil {
-		return "", fmt.Errorf("error converting %s to int: %w", oxygenLines[0], err)
+		return 0, fmt.Errorf("error converting %s to int: %w", oxygenLines[0], err)
 	}
 	c02, err := strconv.ParseInt(c02Lines[0], 2, 64)
 	if err != nil {
-		return "", fmt.Errorf("error converting %s to int: %w", c02Lines[0], err)
+		return 0, fmt.Errorf("error converting %s to int: %w", c02Lines[0], err)
 	}
 
-	return fmt.Sprint(oxygen * c02), nil
+	return int(oxygen * c02), nil
 }

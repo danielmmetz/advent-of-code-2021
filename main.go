@@ -38,7 +38,7 @@ func mainE(day, part int) error {
 	if err := scanner.Err(); err != nil {
 		return fmt.Errorf("error reading lines from stdin: %w", err)
 	}
-	var s Solution
+	var s interface{}
 	switch day {
 	case 1:
 		s = day01.Solution{}
@@ -64,13 +64,21 @@ func mainE(day, part int) error {
 		return fmt.Errorf("not yet implemented: day %d", day)
 	}
 
-	var result string
+	var result int
 	var err error
 	switch part {
 	case 1:
-		result, err = s.Part1(lines)
+		p, ok := s.(Part1er)
+		if !ok {
+			return fmt.Errorf("not yet implemented: day %d part 1", day)
+		}
+		result, err = p.Part1(lines)
 	case 2:
-		result, err = s.Part2(lines)
+		p, ok := s.(Part2er)
+		if !ok {
+			return fmt.Errorf("not yet implemented: day %d part 2", day)
+		}
+		result, err = p.Part2(lines)
 	default:
 		return fmt.Errorf("unexpected part: %d", part)
 	}
@@ -81,7 +89,10 @@ func mainE(day, part int) error {
 	return nil
 }
 
-type Solution interface {
-	Part1([]string) (string, error)
-	Part2([]string) (string, error)
+type Part1er interface {
+	Part1([]string) (int, error)
+}
+
+type Part2er interface {
+	Part2([]string) (int, error)
 }
